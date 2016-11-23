@@ -44,7 +44,7 @@ abstract class IntegrationSpec extends Specification {
         User user = new User(USERNAME, PASSWORD)
         userRepository.save(user)
 
-        UserDetails userDetails = userRepository.findOneByUsername(USERNAME)
+        UserDetails userDetails = userRepository.findOneByUsername(USERNAME).get()
 
         RememberMeAuthenticationToken token = new RememberMeAuthenticationToken("key", userDetails, null)
         token.setAuthenticated(true)

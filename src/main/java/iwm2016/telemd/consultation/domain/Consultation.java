@@ -2,21 +2,24 @@ package iwm2016.telemd.consultation.domain;
 
 import iwm2016.telemd.consultation.dto.ConsultationCreationDto;
 import iwm2016.telemd.consultation.dto.ConsultationListItemDto;
-import iwm2016.telemd.infrastructure.entity.AbstractSignedEntity;
+import iwm2016.telemd.infrastructure.entity.AbstractBaseEntity;
+import iwm2016.telemd.infrastructure.entity.Signature;
 
 import javax.persistence.*;
-import java.time.Instant;
 
 /**
  * Created by jakubk on 05.11.16.
  */
 @Entity
 @Table(name = "CONSULTATIONS")
-class Consultation extends AbstractSignedEntity {
+class Consultation extends AbstractBaseEntity {
 
     private String title;
 
     private String description;
+
+    @Embedded
+    private Signature creationSignature;
 
     @Column(name = "PRIVACY")
     @Enumerated(EnumType.STRING)
@@ -24,12 +27,10 @@ class Consultation extends AbstractSignedEntity {
 
     public ConsultationListItemDto toListItemDto() {
         ConsultationListItemDto dto = new ConsultationListItemDto();
-        dto.id = getId();
-        dto.version = getVersion();
-        dto.created = getCreatedOn().toEpochMilli();
-        dto.createdBy = getCreatedBy();
-
-        dto.title = title;
+        dto.id = this.getId();
+        dto.version = this.getVersion();
+        dto.title = this.title;
+        dto.created = creationSignature.toDto();
         return dto;
     }
 
