@@ -2,7 +2,12 @@
 
 **tele-md** is a Health Care Informatics (Informatyka w Medycynie) end-of-term assignment.
 
-*TODO: short description*
+Prosty system telekonsultacyjny (2-3 osoby)
+
+    czat oraz grupowe przegl¹danie zdjêæ
+    komunikacja tekstowa i g³osowa (g³osowa dla 3 osób)
+    prosta manipulacja zdjêciami (zaznaczanie, obracanie, zmiana rozmiaru)
+    archiwum sesji – mo¿liwoœæ odtworzenia przebiegu
 
 ## About
 
