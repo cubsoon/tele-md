@@ -4,8 +4,11 @@ import iwm2016.telemd.consultation.dto.ConsultationCreationDto;
 import iwm2016.telemd.consultation.dto.ConsultationListItemDto;
 import iwm2016.telemd.infrastructure.entity.AbstractBaseEntity;
 import iwm2016.telemd.infrastructure.entity.Signature;
+import iwm2016.telemd.users.User;
+import iwm2016.telemd.users.UserProvider;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 /**
  * Created by jakubk on 05.11.16.
@@ -34,10 +37,12 @@ class Consultation extends AbstractBaseEntity {
         return dto;
     }
 
-    public static Consultation fromCreationDto(ConsultationCreationDto dto) {
+    public static Consultation fromCreationDto(ConsultationCreationDto dto, Signature signature) {
         Consultation consultation = new Consultation();
         consultation.title = dto.title;
         consultation.description = dto.description;
+        consultation.privacy = ConsultationPrivacy.valueOf(dto.privacy);
+        consultation.creationSignature = signature;
         return consultation;
     }
 

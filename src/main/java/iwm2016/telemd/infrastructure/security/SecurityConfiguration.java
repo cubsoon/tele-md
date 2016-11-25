@@ -1,6 +1,6 @@
 package iwm2016.telemd.infrastructure.security;
 
-import iwm2016.telemd.users.UserRepository;
+import iwm2016.telemd.users.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,11 +19,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserProvider userProvider;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userRepository);
+        auth.userDetailsService(userProvider);
     }
 
     @Override

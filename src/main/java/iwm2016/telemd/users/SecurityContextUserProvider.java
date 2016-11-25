@@ -3,6 +3,8 @@ package iwm2016.telemd.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -22,8 +24,16 @@ class SecurityContextUserProvider implements UserProvider {
 
     @Override
     public Optional<User> getLoggedUser() {
-        String username = getUsernameFromSecurityContext();
         return userRepository.findOneByUsername(getUsernameFromSecurityContext());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findOneByUsername(username);
+        if (!user.isPresent()) {
+            throw new UsernameNotFoundException("No user with username " + username + ".");
+        }
+        return user.get();
     }
 
     private static String getUsernameFromSecurityContext() {
@@ -33,4 +43,5 @@ class SecurityContextUserProvider implements UserProvider {
         }
         return null;
     }
+
 }

@@ -42,6 +42,13 @@ public class Signature {
         return signature;
     }
 
+    public static Signature createSignature(User user, Instant instant) {
+        Signature signature = new Signature();
+        signature.user = user;
+        signature.timestamp = instant;
+        return signature;
+    }
+
     public User getUser() {
         return user;
     }
