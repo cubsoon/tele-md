@@ -43,13 +43,13 @@ Lekarz 2 wchodzi do sesji utworzonej przez Lekarza 1, zaznacza część zdjęcia
 * czat audio/video z prostym kalendarzem nadchodzących spotkań
 * interfejs dostosowany do przeglądarek mobilnych
 
-### Planowana architektura systemu i propozycja rozwiązań algorytmicznych
+### 3. Planowana architektura systemu i propozycja rozwiązań algorytmicznych
 
 Aplikacja internetowa z podziałem na:
 * monolityczny serwer udostępniający zasoby,
 * aplikacja działająca w przeglądarce konsumująca te zasoby.
 
-### Wykorzystywane technologie i narzędzia
+### 4. Wykorzystywane technologie i narzędzia
 
 #### Backend
 * Java 8
@@ -63,7 +63,7 @@ Aplikacja internetowa z podziałem na:
 * Bootstrap
 * Angular 2
 
-### Harmonogram prac oraz ich podział w ramach zespołu
+### 5. Harmonogram prac oraz ich podział w ramach zespołu
 
 #### Pierwszy punkt kontrolny
 Ten dokument, stworzenie repozytorium i konfiguracja środowiska.
@@ -79,7 +79,7 @@ Hubert - aplikacja frontendowa, interfejs, doprecyzowanie wymagań
 
 Jakub - aplikacja backendowa, strona techniczna wymagań
 
-### Przewidywane trudności i problemy
+### 6. Przewidywane trudności i problemy
 
 #### Obsługa zdjęć i grafik - upload, zaznaczanie itp.
 20% wymagań zajmuje 80% czasu - to wymaganie należy do tych 20%.
