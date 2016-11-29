@@ -30,7 +30,7 @@ public class Signature {
 
     public SignatureDto toDto() {
         SignatureDto dto = new SignatureDto();
-        dto.user = user.toDto();
+        dto.user = user != null ? user.toDto() : null;
         dto.timestamp = timestamp;
         return dto;
     }
