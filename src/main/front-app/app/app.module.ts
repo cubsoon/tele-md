@@ -4,14 +4,34 @@ import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }  from './app.component';
 import { ConsultationListComponent } from './consultation-list.component';
+import { ConsultationComponent } from './consultation.component'
 import { LoginViewComponent } from './login.component';
 
 import { ConsultationService } from './consultation.service';
 
+import { AppRoutingModule } from './app-routing.module';
+
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ],
-  declarations: [ AppComponent, ConsultationListComponent, LoginViewComponent],
-  bootstrap:    [ AppComponent ],
-  providers: 	[ ConsultationService ]
+  imports:      [
+  BrowserModule, 
+  FormsModule, 
+  AppRoutingModule
+  ],
+  
+  declarations: [
+  AppComponent,
+  ConsultationListComponent,
+  ConsultationComponent,
+  LoginViewComponent
+  ],
+  
+  bootstrap:    [
+  AppComponent
+  ],
+  
+  providers: 	[
+  ConsultationService
+  ]
 })
+
 export class AppModule { }

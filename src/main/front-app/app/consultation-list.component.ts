@@ -7,6 +7,10 @@ import { ConsultationService } from './consultation.service';
 	selector: `consultation-list`,
 
 	styles: [`
+	  a {
+	  	color: black;
+		text-decoration: none;
+	  }
 	  .consultations {
 	    margin: 0 0 2em 0;
 	    list-style-type: none;
@@ -20,7 +24,7 @@ import { ConsultationService } from './consultation.service';
 	    background-color: #EEE;
 	    margin: .5em;
 	    padding: .3em .3em .3em;
-	    height: 5%
+	    height: 5%;
 	    border-radius: 4px;
 	  }
 	  .consultations li.selected:hover {
@@ -95,13 +99,15 @@ import { ConsultationService } from './consultation.service';
 	template: `
 	<h2>Lista konsultacji</h2>
 	  	<ul class="consultations">
-	  		<li *ngFor= "let consultation of consultations">
+	  		<a *ngFor="let consultation of consultations"  [routerLink]="['/detail', consultation.id]"  class="col-1-4">
+	  			<li>
 	  			<span class="title">{{consultation.title}}</span>
 	  			<img class="lockpad" src="{{consultation.lock}}.png" alt={{consultation.lock}}>
 	  			<span class="description">Opis: {{consultation.desc}}</span>
 	  			<span class="creator">Założył: {{consultation.creator_id}}</span>
 	  			<span class="date">Data utworzenia: {{consultation.date_of_creation}}</span>
-	  		</li>
+	  			</li>
+	  		</a>
 	  	</ul>
 	`
 	})

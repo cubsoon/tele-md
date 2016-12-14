@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { Consultation } from './consultation';
-
 @Component({
   	selector: 'my-app',
   	
@@ -25,20 +23,38 @@ import { Consultation } from './consultation';
 	  	height: 35px;
 	  	width: 35px;
 	  	float: right;
+	  	padding: 1.5em 0.3em 0.9em 0.5em;
+	  	margin-right: -1.0em;
+	  	margin-top: -1.8em;
+	  }
+	  .logout:hover {
+	  	background-color: #34444b
+	  }
+	  a {
+	  	color: white;
+	  	text-decoration: none;
+	  	font-size: 17px;
+	  }
+	  .nav {
+	  	padding: 1.5em 0.3em 1.15em 0.3em;
+	  	margin-left: 1.5em;
+	  }
+	  .nav:hover {
+	  	background-color: #34444b;
 	  }
 `],
 
   	template: `
-  	<span class="top">{{appname}}
-  	<img class="logout" src="logout.png" alt="Wyloguj"></span>
-  	<consultation-list></consultation-list>
+  	<span class="top">{{title}}
+  	<a class="nav" routerLink="/consultations">Consultation list</a>
+  	<a routerLink="/"><img class="logout" src="logout.png" alt="Wyloguj"></a></span>
+    <router-outlet></router-outlet>
+    <login-view></login-view>
   	`,
 
   	
 })
 
 export class AppComponent {
-	appname = 'Telekonsultacje medyczne';
-	
+	title = 'Telekonsultacje medyczne';
 }
-//<login-view></login-view>
