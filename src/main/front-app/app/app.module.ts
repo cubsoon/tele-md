@@ -6,6 +6,7 @@ import { AppComponent }  from './app.component';
 import { ConsultationListComponent } from './consultation-list.component';
 import { ConsultationComponent } from './consultation.component'
 import { LoginViewComponent } from './login.component';
+import { NewConsultationComponent } from './new-consultation.component'
 
 import { ConsultationService } from './consultation.service';
 
@@ -22,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
   AppComponent,
   ConsultationListComponent,
   ConsultationComponent,
-  LoginViewComponent
+  LoginViewComponent,
+  NewConsultationComponent
   ],
   
   bootstrap:    [

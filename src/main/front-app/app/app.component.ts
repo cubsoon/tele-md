@@ -46,10 +46,10 @@ import { Component } from '@angular/core';
 
   	template: `
   	<span class="top">{{title}}
-  	<a class="nav" routerLink="/consultations">Consultation list</a>
+  	<a class="nav" routerLink="/consultations">Lista konsultacji</a>
+  	<a class="nav" routerLink="/new">Nowa konsultacja</a>
   	<a routerLink="/"><img class="logout" src="logout.png" alt="Wyloguj"></a></span>
     <router-outlet></router-outlet>
-    <login-view></login-view>
   	`,
 
   	

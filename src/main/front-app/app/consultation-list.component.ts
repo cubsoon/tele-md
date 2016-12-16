@@ -7,6 +7,11 @@ import { ConsultationService } from './consultation.service';
 	selector: `consultation-list`,
 
 	styles: [`
+	  h2 {
+	  	background-color: #b4c3cb;
+	  	border-radius: 4px 4px 4px 4px;
+		width: 50%;
+	  }
 	  a {
 	  	color: black;
 		text-decoration: none;
@@ -101,11 +106,11 @@ import { ConsultationService } from './consultation.service';
 	  	<ul class="consultations">
 	  		<a *ngFor="let consultation of consultations"  [routerLink]="['/detail', consultation.id]"  class="col-1-4">
 	  			<li>
-	  			<span class="title">{{consultation.title}}</span>
-	  			<img class="lockpad" src="{{consultation.lock}}.png" alt={{consultation.lock}}>
-	  			<span class="description">Opis: {{consultation.desc}}</span>
-	  			<span class="creator">Założył: {{consultation.creator_id}}</span>
-	  			<span class="date">Data utworzenia: {{consultation.date_of_creation}}</span>
+		  			<span class="title">{{consultation.title}}</span>
+		  			<img class="lockpad" src="{{consultation.lock}}.png" alt={{consultation.lock}}>
+		  			<span class="description">Opis: {{consultation.desc}}</span>
+		  			<span class="creator">{{consultation.creator_id}}</span>
+		  			<span class="date">Data utworzenia: {{consultation.date_of_creation}}</span>
 	  			</li>
 	  		</a>
 	  	</ul>

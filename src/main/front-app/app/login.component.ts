@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router }   from '@angular/router';
 
 @Component({
   	selector: 'login-view',
@@ -18,11 +19,15 @@ import { Component, Input } from '@angular/core';
   			<label for="password">Hasło:</label>
   			<input type="password" id="password" ng-model="credentials.password">
 			
-			<button type="submit">Zaloguj</button>
+			<button type="submit" (click)="gotoPage()">Zaloguj</button>
 
 		</form>
   	`
 })
 
 export class LoginViewComponent {
+	constructor(private router: Router) {}
+	gotoPage(): void {
+  		this.router.navigate(['/consultations']);
+}
 }
