@@ -40,6 +40,5 @@ testem.log
 Thumbs.db
 
 # maven frontent plugin dirs
-node/
-node_modules/
-etc/
+/node
+/etc

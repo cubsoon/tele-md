@@ -93,12 +93,13 @@ import 'rxjs/add/operator/switchMap';
 	})
 
 export class ConsultationComponent implements OnInit {
-	@Input() consultation: Consultation;
+
+  @Input() consultation: Consultation;
 
 	constructor(
 		private consultationService: ConsultationService,
 		private route: ActivatedRoute,
-  		private location: Location
+    private location: Location
 		) { }
 
   	ngOnInit(): void {

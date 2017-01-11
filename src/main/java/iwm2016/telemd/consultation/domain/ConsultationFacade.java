@@ -1,21 +1,15 @@
 package iwm2016.telemd.consultation.domain;
 
+import iwm2016.telemd.consultation.dto.ConsultationActionDto;
 import iwm2016.telemd.consultation.dto.ConsultationCreationDto;
 import iwm2016.telemd.consultation.dto.ConsultationListItemDto;
-import iwm2016.telemd.infrastructure.datetime.DateProvider;
 import iwm2016.telemd.infrastructure.entity.Signature;
-import iwm2016.telemd.users.User;
-import iwm2016.telemd.users.UserProvider;
+import iwm2016.telemd.infrastructure.entity.SignatureProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,19 +19,19 @@ import java.util.stream.Collectors;
 @Component
 public class ConsultationFacade {
 
-    private ConsultationRepository consultationRepository;
+    private final ConsultationRepository consultationRepository;
 
-    private DateProvider dateProvider;
+    private final ConsultationActionRepository consultationActionRepository;
 
-    private UserProvider userProvider;
+    private final SignatureProvider signatureProvider;
 
     @Autowired
     public ConsultationFacade(ConsultationRepository consultationRepository,
-                              DateProvider dateProvider,
-                              UserProvider userProvider) {
+                              ConsultationActionRepository consultationActionRepository,
+                              SignatureProvider signatureProvider) {
         this.consultationRepository = consultationRepository;
-        this.dateProvider = dateProvider;
-        this.userProvider = userProvider;
+        this.consultationActionRepository = consultationActionRepository;
+        this.signatureProvider = signatureProvider;
     }
 
     public List<ConsultationListItemDto> getLatestConsultations() {
@@ -48,11 +42,30 @@ public class ConsultationFacade {
     }
 
     public ConsultationListItemDto createConsultation(ConsultationCreationDto dto) {
-        Signature signature = Signature.createSignature(userProvider, dateProvider);
+        Signature signature = signatureProvider.getCurrentUserSignature();
         Consultation consultation = consultationRepository.save(
                 Consultation.fromCreationDto(dto, signature));
         consultationRepository.saveAndFlush(consultation);
         return consultation.toListItemDto();
+    }
+
+    public List<ConsultationActionDto> getNewActions(String consultationId, List<String> lastActionIds) {
+        // TODO: fix style
+        ConsultationAction oldestRecentAction = consultationActionRepository
+                .findFirstByIdInAndConsultationIdOrderBySignatureTimestampAsc(lastActionIds, consultationId);
+
+        List<ConsultationAction> newActions = consultationActionRepository
+                .findBySignatureTimestampGreaterThanAndIdNotInAndConsultationIdEqualsOrderBySignatureTimestampAsc(
+                        oldestRecentAction.getSignature().getTimestamp(), lastActionIds, consultationId);
+
+        return newActions.stream().map(ConsultationAction::toDto).collect(Collectors.toList());
+    }
+
+    public ConsultationActionDto doAction(String consultationId, ConsultationActionDto actionDto) {
+        Signature signature = signatureProvider.getCurrentUserSignature();
+        ConsultationAction consultationAction = ConsultationAction.fromDto(consultationId, signature, actionDto);
+        consultationActionRepository.saveAndFlush(consultationAction);
+        return consultationAction.toDto();
     }
 
 }
