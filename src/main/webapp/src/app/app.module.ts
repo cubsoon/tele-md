@@ -11,6 +11,7 @@ import { LoginViewComponent } from './login.component';
 import { NewConsultationComponent } from './new-consultation.component'
 
 import { ConsultationService } from './consultation.service';
+import { PlayareaService } from './playarea/playarea.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,7 +30,8 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule
   ],
   providers: [
-    ConsultationService
+    ConsultationService,
+    PlayareaService
    ],
   bootstrap: [
     AppComponent
