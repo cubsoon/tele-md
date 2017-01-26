@@ -9,6 +9,7 @@ import { ConsultationListComponent } from './consultation-list.component';
 import { ConsultationComponent } from './consultation.component'
 import { LoginViewComponent } from './login.component';
 import { NewConsultationComponent } from './new-consultation.component'
+import { PlayareaComponent } from './playarea/playarea.component'
 
 import { ConsultationService } from './consultation.service';
 import { PlayareaService } from './playarea/playarea.service';
@@ -21,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     ConsultationListComponent,
     ConsultationComponent,
     LoginViewComponent,
-    NewConsultationComponent
+    NewConsultationComponent,
+    PlayareaComponent
   ],
   imports: [
     BrowserModule,
