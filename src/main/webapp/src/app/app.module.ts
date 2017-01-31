@@ -16,6 +16,9 @@ import { PlayareaService } from './playarea/playarea.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api'; //fake http
+import { InMemoryDataService }  from './in-memory-data.service';  //fake http
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +32,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService) //fake http
   ],
   providers: [
     ConsultationService,

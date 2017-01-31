@@ -3,6 +3,7 @@ import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 
 import { Consultation } from './consultation';
+import { Post } from './post';
 import { ConsultationService } from './consultation.service';
 
 import 'rxjs/add/operator/switchMap';
@@ -82,11 +83,12 @@ import 'rxjs/add/operator/switchMap';
 	  </ul>
 
 	  <div class="posts">
-	  	<textarea rows="5" cols="60" name="content"></textarea><td>
+	  	<label>Nowy post</label><td>
+	  	<textarea #postContent rows="5" cols="60" name="content"></textarea></td>
 	  	<input type="file" name="img" accept="image/*">
 	  </div>
 
-	  <button>Dodaj post</button>
+	  <button (click)="add(postContent.value); postContent.value=''">Dodaj post</button>
       <button (click)="goBack()">Wróć</button>
     </div>
 	`
@@ -99,7 +101,7 @@ export class ConsultationComponent implements OnInit {
 	constructor(
 		private consultationService: ConsultationService,
 		private route: ActivatedRoute,
-    private location: Location
+    	private location: Location
 		) { }
 
   	ngOnInit(): void {
@@ -110,5 +112,14 @@ export class ConsultationComponent implements OnInit {
 
   	goBack(): void {
   		this.location.back();
-}
+	}
+
+	add(content: string): void {
+	  	content = content.trim();
+	 	if (!content) { return; }
+	 	var newPost = new Post;
+	 	newPost.content = content;
+	 	this.consultation.posts.push(newPost);
+	  	this.consultationService.createPost(this.consultation);
+	}
 }
