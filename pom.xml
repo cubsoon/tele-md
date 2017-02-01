@@ -28,6 +28,7 @@
         <frontend.workingDirectory>${basedir}/src/main/webapp</frontend.workingDirectory>
         <frontend.outputDirectory>${frontend.workingDirectory}/dist</frontend.outputDirectory>
         <frontend.targetDirectory>${basedir}/target/classes/static</frontend.targetDirectory>
+		<frontend-maven-plugin.version>1.3</frontend-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -46,6 +47,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.auth0/auth0 -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0-spring-security-api</artifactId>
+            <version>0.3.3</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -140,7 +148,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.3</version>
+                        <version>${frontend-maven-plugin.version}</version>
 
                         <configuration>
                             <nodeVersion>${frontend.nodeVersion}</nodeVersion>
@@ -155,7 +163,16 @@
                                 </goals>
                                 <phase>generate-resources</phase>
                             </execution>
-
+							<execution>
+								<id>frontend - npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<phase>generate-resources</phase>
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
                             <execution>
                                 <id>frontend - npm run ng build</id>
                                 <goals>
@@ -166,6 +183,16 @@
                                     <arguments>run ng build</arguments>
                                 </configuration>
                             </execution>
+
+							<execution>
+								<id>frontend - npm start</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+
+								</configuration>
+							</execution>
                         </executions>
                     </plugin>
 
@@ -195,7 +222,39 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
+
+        <profile>
+            <id>serve-frontend</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${frontend-maven-plugin.version}</version>
+
+                        <configuration>
+                            <nodeVersion>${frontend.nodeVersion}</nodeVersion>
+                            <workingDirectory>${frontend.workingDirectory}</workingDirectory>
+                        </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>frontend - npm start</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <phase>install</phase>
+                                <configuration>
+                                    <arguments>start</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
 
 
 </project>
