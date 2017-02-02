@@ -5,10 +5,18 @@ import 'rxjs/add/operator/toPromise';
 
 import { Consultation } from './consultation';
 
+class consultationDTO {
+	title: string;
+	description: string;
+	privacy: string;
+}
+
 @Injectable()
 export class ConsultationService {
-  private consultationsUrl = 'api/consultations';
+  private consultationsUrl = '/consultation';
   private headers = new Headers({'Content-Type': 'application/json'});
+
+  private consult = new consultationDTO();
 
   constructor(private http: Http) { }
 
@@ -28,8 +36,12 @@ export class ConsultationService {
   }
 
   createConsultation(title: string, desc: string): Promise<Consultation> {
+  	this.consult.description = desc;
+  	this.consult.title = title;
+  	this.consult.privacy = 'privacy';
     return this.http
-      .post(this.consultationsUrl, JSON.stringify({title: title, desc: desc, lock: 'unlocked', date_of_creation: this.getCurrentDate()}), {headers: this.headers})
+      //.put(this.consultationsUrl, JSON.stringify({title: title, description: desc, lock: 'unlocked', date_of_creation: this.getCurrentDate()}), {headers: this.headers})
+      .put(this.consultationsUrl, this.consult)
       .toPromise()
       .then(res => res.json().data)
       .catch(this.handleError);
