@@ -8,7 +8,4 @@ public class ConsultationCreationDto {
     public String title;
 
     public String description;
-
-    public String privacy;
-
 }

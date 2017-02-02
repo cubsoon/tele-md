@@ -24,10 +24,6 @@ class Consultation extends AbstractBaseEntity {
     @Embedded
     private Signature creationSignature;
 
-    @Column(name = "PRIVACY")
-    @Enumerated(EnumType.STRING)
-    private ConsultationPrivacy privacy;
-
     public ConsultationListItemDto toListItemDto() {
         ConsultationListItemDto dto = new ConsultationListItemDto();
         dto.id = this.getId();
@@ -41,7 +37,6 @@ class Consultation extends AbstractBaseEntity {
         Consultation consultation = new Consultation();
         consultation.title = dto.title;
         consultation.description = dto.description;
-        consultation.privacy = ConsultationPrivacy.valueOf(dto.privacy);
         consultation.creationSignature = signature;
         return consultation;
     }
