@@ -36,7 +36,7 @@ public class ConsultationFacade {
 
     public List<ConsultationListItemDto> getLatestConsultations() {
         Pageable pageable = new PageRequest(0, 10, ConsultationRepository.CREATED_ON_DESC_ORDER);
-        return consultationRepository.findAllByPrivacy(ConsultationPrivacy.PUBLIC, pageable).stream()
+        return consultationRepository.findAll(pageable).getContent().stream()
                 .map(Consultation::toListItemDto)
                 .collect(Collectors.toList());
     }

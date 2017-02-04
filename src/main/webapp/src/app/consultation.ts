@@ -1,7 +1,7 @@
 import { Post } from './post'
 
 export class Consultation {
-	id: number;
+	id: string;
 	title: string;
 	desc: string;
 	date_of_creation: string;

@@ -10,7 +10,7 @@ import spock.lang.Specification
 class ConsultationDtoBuilder extends Specification {
 
     static ConsultationCreationDto createConsultationCreationDto(String title, String description, String privacy) {
-        return new ConsultationCreationDto(description: description, title: title, privacy: privacy)
+        return new ConsultationCreationDto(description: description, title: title)
     }
 
 }

@@ -15,6 +15,4 @@ interface ConsultationRepository extends JpaRepository<Consultation, String> {
 
     Sort CREATED_ON_DESC_ORDER = new Sort(DESC, "creationSignature.timestamp");
 
-    List<Consultation> findAllByPrivacy(ConsultationPrivacy privacy, Pageable pageable);
-
 }

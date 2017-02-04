@@ -15,7 +15,13 @@ import { PlayareaComponent } from './playarea/playarea.component'
 import { ConsultationService } from './consultation.service';
 import { PlayareaService } from './playarea/playarea.service';
 
+import { Auth } from './auth.service';
+
 import { AppRoutingModule } from './app-routing.module';
+
+import { AUTH_PROVIDERS } from 'angular2-jwt'
+
+import { Auth0Lock } from 'auth0-lock'
 
 //import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import { InMemoryDataService }  from './in-memory-data.service';
@@ -41,17 +47,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     //InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   providers: [
+    Auth,
     ConsultationService,
     PlayareaService,
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [ Http, RequestOptions ]
-    }
+    AUTH_PROVIDERS
    ],
   bootstrap: [
-    AppComponent
+    AppComponent,
+    Auth0Lock
   ]
 })
-
 export class AppModule { }
