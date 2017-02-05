@@ -1,8 +1,10 @@
+import { PostDto } from './post-dto'
 import { SignatureDto } from './signature-dto'
 
-export class ConsultationListItemDto {
+export class ConsultationDto {
 	id: string;
     version: number;
 	title: string;
 	created: SignatureDto;
+	posts: PostDto[];
 }

@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 
-import { Consultation } from './consultation';
-import { Post } from './post';
+import { ConsultationDto } from './interface/consultation-dto';
+import { PostDto } from './interface/post-dto';
 import { ConsultationService } from './consultation.service';
 
 import 'rxjs/add/operator/switchMap';
@@ -70,15 +70,16 @@ import 'rxjs/add/operator/switchMap';
     <div *ngIf= "consultation">
       <div class="title">
       	<h2>{{consultation.title}}</h2>
-        <label>Dodano dnia: </label>{{consultation.date_of_creation}}
-        <label> przez: </label>{{consultation.creator_id}}
+        <label>Dodano dnia: </label>{{consultation.created.timestamp}}
+        <label> przez: </label>{{consultation.created.user?.username}}
+		{{consultation.description}}
       </div>
 
       <ul class="posts">
 	  		<li *ngFor="let post of consultation.posts">
 		  		<span class="content">{{post.content}}</span>
 		  		<span class="image">TU BEDZIE ZDJECIE</span><td>
-		  		<span class="creator">{{post.creator_id}}</span>
+		  		<span class="creator">{{post.added.user?.username}}</span>
 	  		</li>
 	  </ul>
 
@@ -92,11 +93,10 @@ import 'rxjs/add/operator/switchMap';
       <button (click)="goBack()">Wróć</button>
     </div>
 	`
-	})
-
+})
 export class ConsultationComponent implements OnInit {
 
-  @Input() consultation: Consultation;
+  private consultation: ConsultationDto;
 
 	constructor(
 		private consultationService: ConsultationService,
@@ -106,20 +106,21 @@ export class ConsultationComponent implements OnInit {
 
   	ngOnInit(): void {
     	this.route.params
-    		.switchMap((params: Params) => this.consultationService.getConsultation(+params['id']))
+    		.switchMap((params: Params) => this.consultationService.getConsultation(params['id']))
     		.subscribe(consultation => this.consultation = consultation);
   	}
+
+	getPosts() {
+		this.consultationService.getPosts(this.consultation.id).then(result => this.consultation.posts = result)
+	}
 
   	goBack(): void {
   		this.location.back();
 	}
 
 	add(content: string): void {
-	  	content = content.trim();
-	 	if (!content) { return; }
-	 	var newPost = new Post;
+	 	var newPost = new PostDto();
 	 	newPost.content = content;
-	 	this.consultation.posts.push(newPost);
-	  	this.consultationService.createPost(this.consultation);
+	  	this.consultationService.createPost(this.consultation.id, newPost).then(() => this.getPosts());
 	}
 }

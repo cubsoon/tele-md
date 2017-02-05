@@ -1,8 +1,6 @@
 package iwm2016.telemd.consultation.domain;
 
-import iwm2016.telemd.consultation.dto.ConsultationActionDto;
-import iwm2016.telemd.consultation.dto.ConsultationCreationDto;
-import iwm2016.telemd.consultation.dto.ConsultationListItemDto;
+import iwm2016.telemd.consultation.dto.*;
 import iwm2016.telemd.infrastructure.entity.Signature;
 import iwm2016.telemd.infrastructure.entity.SignatureProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
  * Created by jakubk on 05.11.16.
  */
 @Component
+@Transactional
 public class ConsultationFacade {
 
     private final ConsultationRepository consultationRepository;
@@ -68,4 +68,21 @@ public class ConsultationFacade {
         return consultationAction.toDto();
     }
 
+    public ConsultationDto getConsultation(String consultationId) {
+        Consultation consultation = consultationRepository.findOne(consultationId);
+        return consultation.toDto();
+    }
+
+
+    public List<PostDto> getPosts(String consultationId) {
+        return getConsultation(consultationId).posts;
+    }
+
+    public void createPost(PostDto dto, String consultationId) {
+        Signature signature = signatureProvider.getCurrentUserSignature();
+        Consultation consultation = consultationRepository.findOne(consultationId);
+        Post post = Post.fromDto(dto, consultation, signature);
+
+        consultation.addPost(post);
+    }
 }

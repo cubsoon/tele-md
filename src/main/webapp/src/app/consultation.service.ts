@@ -4,57 +4,54 @@ import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Consultation } from './consultation'
+import { ConsultationDto } from './interface/consultation-dto';
 import { ConsultationListItemDto } from './interface/consultation-list-item-dto';
+import { ConsultationCreationDto } from './interface/consultation-creation-dto';
 
-class consultationDTO {
-  title: string;
-  description: string;
-  privacy: string;
-}
+import { PostDto } from './interface/post-dto';
 
 @Injectable()
 export class ConsultationService {
   private consultationsUrl = '/api/consultation';
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
-  private consult = new consultationDTO();
-
   constructor(private http: AuthHttp) { }
 
-  getConsultations(): Promise<Consultation[]> {
+  getConsultations(): Promise<ConsultationListItemDto[]> {
     return this.http.get(this.consultationsUrl)
       .toPromise()
-      .then(response => (response.json().data as ConsultationListItemDto[]).map(dto => dto.toConsultation()))
+      .then(response => response.json() as ConsultationListItemDto[])
       .catch(this.handleError);
   }
 
-  getConsultation(id: number): Promise<Consultation> {
-    const url = `${this.consultationsUrl}/${id}`;
+  getConsultation(consultationId: string): Promise<ConsultationDto> {
+    let url = `${this.consultationsUrl}/${consultationId}`;
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json().data as Consultation)
+      .then(response => response.json() as ConsultationDto)
       .catch(this.handleError);
   }
 
-  createConsultation(title: string, desc: string): Promise<Consultation> {
-    this.consult.description = desc;
-    this.consult.title = title;
-    this.consult.privacy = 'privacy';
-    return this.http
-      //.put(this.consultationsUrl, JSON.stringify({title: title, description: desc, lock: 'unlocked', date_of_creation: this.getCurrentDate()}), {headers: this.headers})
-      .put(this.consultationsUrl, this.consult)
+  getPosts(consultationId: string): Promise<PostDto[]> {
+    let url = `${this.consultationsUrl}/${consultationId}/post`;
+    return this.http.get(url)
       .toPromise()
-      .then(res => res.json().data)
+      .then(response => response.json() as PostDto[])
       .catch(this.handleError);
   }
 
-  createPost(consultation: Consultation): Promise<Consultation> {
-    const url = `${this.consultationsUrl}/${consultation.id}`;
-    return this.http
-      .put(url, JSON.stringify(consultation), { headers: this.headers })
+  createConsultation(consultation: ConsultationCreationDto): Promise<void> {
+    return this.http.put(this.consultationsUrl, consultation)
       .toPromise()
-      .then(() => consultation)
+      .then(res => { })
+      .catch(this.handleError);
+  }
+
+  createPost(consultationId: string, post: PostDto): Promise<void> {
+    let url = `${this.consultationsUrl}/${consultationId}/post`;
+    return this.http.put(url, post)
+      .toPromise()
+      .then(result => { })
       .catch(this.handleError);
   }
 

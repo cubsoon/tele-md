@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router }   from '@angular/router';
 
-import { Consultation } from './consultation';
+import { ConsultationCreationDto } from './interface/consultation-creation-dto';
 import { ConsultationService } from './consultation.service';
 
 @Component({
@@ -21,37 +21,30 @@ import { ConsultationService } from './consultation.service';
   	template: `
     <div>
       <label>Tytuł:</label>
-      <input #consultationTitle type="text" name="title"><td>
+      <input [(ngModel)]="consultation.title" type="text" required><td>
       <label>Opis:</label></td>
-      <textarea #consultationDesc rows="5" cols="60" name="content"></textarea><td>
-      <button (click)="add(consultationTitle.value, consultationDesc.value); consultationTitle.value=''; consultationDesc.value=''">Stwórz sesję</button>
+      <textarea [(ngModel)]="consultation.description" rows="5" cols="60" name="content"></textarea><td>
+      <button (click)="add()">Stwórz sesję</button>
     </div>
   	`
 })
 
-export class NewConsultationComponent implements OnInit {
-  consultations: Consultation[];
+export class NewConsultationComponent {
 
-  constructor(
-    private consultationService: ConsultationService,
-    ) { }
+  constructor(private consultationService: ConsultationService) { }
 
-  getConsultations(): void {
-      this.consultationService.getConsultations().then(consultations => this.consultations = consultations);
+  private consultation: ConsultationCreationDto = new ConsultationCreationDto();
+  private working: boolean = false;
+
+  add(): void {
+       
+    if (!this.consultation.title || this.working) { 
+      return; 
     }
 
-  ngOnInit(): void {
-    this.getConsultations();
-  }
+    this.working = true;
 
-  add(title: string, desc: string): void {
-    title = title.trim();
-    desc = desc.trim();
-    if (!title) { return; }
-
-    this.consultationService.createConsultation(title, desc)
-      .then(consultation => {
-        this.consultations.push(consultation);
-    });
+    this.consultationService.createConsultation(this.consultation)
+      .then(() => this.working = false);
   }
 }

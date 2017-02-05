@@ -1,10 +1,7 @@
 package iwm2016.telemd.consultation.domain;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 

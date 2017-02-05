@@ -4,11 +4,13 @@ import base.IntegrationSpec
 import com.google.common.io.ByteStreams
 import iwm2016.telemd.attachment.domain.AttachmentFacade
 import iwm2016.telemd.attachment.dto.AttachmentReferenceDto
+import org.junit.Ignore
 import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * @author kaminsj7
  */
+@Ignore
 class AttachmentUploadSpec extends IntegrationSpec {
 
     @Autowired

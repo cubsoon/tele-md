@@ -43,9 +43,15 @@ public class SecurityConfiguration extends Auth0SecurityConfig {
                 .anyRequest().authenticated();
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+        web.ignoring().antMatchers("/api/h2-console", "/api/h2-console/**");
+    }
+
     /*
-     * Only required for sample purposes..
-     */
+         * Only required for sample purposes..
+         */
     String getAuthorityStrategy() {
         return super.authorityStrategy;
     }
