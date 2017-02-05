@@ -19,10 +19,6 @@ import { Auth } from './auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AUTH_PROVIDERS } from 'angular2-jwt'
-
-import { Auth0Lock } from 'auth0-lock'
-
 //import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import { InMemoryDataService }  from './in-memory-data.service';
 
@@ -50,11 +46,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     Auth,
     ConsultationService,
     PlayareaService,
-    AUTH_PROVIDERS
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [ Http, RequestOptions ]
+    }
    ],
   bootstrap: [
-    AppComponent,
-    Auth0Lock
+    AppComponent
   ]
 })
 export class AppModule { }

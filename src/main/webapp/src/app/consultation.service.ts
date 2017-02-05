@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -19,7 +20,7 @@ export class ConsultationService {
 
   private consult = new consultationDTO();
 
-  constructor(private http: Http) { }
+  constructor(private http: AuthHttp) { }
 
   getConsultations(): Promise<Consultation[]> {
     return this.http.get(this.consultationsUrl)
