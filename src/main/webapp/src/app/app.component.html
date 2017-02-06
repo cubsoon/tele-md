@@ -1,8 +1,7 @@
-<span class="top">{{title}}
+<span class="top">
+	<a class="title" routerLink="/">{{title}}</a>
   	<a class="nav" routerLink="/consultations">Lista konsultacji</a>
   	<a class="nav" routerLink="/new">Nowa konsultacja</a>
-	<button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
-  	<button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
-  	<a routerLink="/"><img class="logout" src="assets/logout.png" alt="Wyloguj"></a>
+  	<img id="logout" class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()" routerLink="/" src="assets/logout.png" alt="Wyloguj">
 </span>
 <router-outlet></router-outlet>
