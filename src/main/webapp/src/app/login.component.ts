@@ -11,7 +11,13 @@ import { Auth } from './auth.service';
   	`],
 
   	template: `
-  		<button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
+	  	<div *ngIf="!auth.authenticated()">
+		  	<p>Skorzystaj z przycisku aby się zalogować.</p>
+			<p>
+				<button class="btn btn-primary btn-margin" (click)="auth.login()">Zaloguj się</button>
+			</p>
+		</div>
+		<p *ngIf="auth.authenticated()">Jesteś zalogowany, witaj!</p>
   	`
 })
 

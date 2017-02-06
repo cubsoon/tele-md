@@ -16,6 +16,8 @@ public class ConsultationDto {
 
     public String title;
 
+    public String description;
+
     public SignatureDto created;
 
     public List<PostDto> posts = new LinkedList<>();

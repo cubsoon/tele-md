@@ -2,6 +2,7 @@ package iwm2016.telemd.infrastructure.entity;
 
 import iwm2016.telemd.infrastructure.datetime.DateProvider;
 import iwm2016.telemd.infrastructure.entity.dto.SignatureDto;
+import iwm2016.telemd.infrastructure.security.Auth0Client;
 import iwm2016.telemd.users.User;
 import iwm2016.telemd.users.UserProvider;
 import lombok.Getter;
@@ -16,10 +17,9 @@ import java.time.Instant;
 @Getter
 public class Signature {
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-
-    private String userId;
 
     @Column(name = "TIMESTAMP", nullable = false)
     private Instant timestamp;
@@ -38,7 +38,6 @@ public class Signature {
     public static Signature createSignature(UserProvider userProvider, DateProvider dateProvider) {
         Signature signature = new Signature();
         signature.user = userProvider.getLoggedUser().orElse(null);
-        signature.userId = userProvider.getLoggedUser().map(User::getUsername).orElse(null);
         signature.timestamp = dateProvider.now();
         return signature;
     }
@@ -46,7 +45,6 @@ public class Signature {
     public static Signature createSignature(User user, Instant instant) {
         Signature signature = new Signature();
         signature.user = user;
-        signature.userId = user.getUsername();
         signature.timestamp = instant;
         return signature;
     }

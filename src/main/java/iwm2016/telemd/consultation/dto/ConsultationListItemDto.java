@@ -13,6 +13,8 @@ public class ConsultationListItemDto {
 
     public String title;
 
+    public String description;
+
     public SignatureDto created;
 
 }

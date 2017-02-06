@@ -6,6 +6,7 @@ import com.auth0.authentication.result.UserProfile;
 import com.auth0.request.Request;
 import com.auth0.spring.security.api.Auth0JWTToken;
 import iwm2016.telemd.users.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,5 +38,13 @@ public class Auth0Client {
                 .username(profile.getNickname())
                 .build();
     }
+
+    public String getUserId(Auth0JWTToken token) {
+        final Request<UserProfile> request = client.tokenInfo(token.getJwt());
+        final UserProfile profile = request.execute();
+
+        return profile.getEmail();
+    }
+
 
 }

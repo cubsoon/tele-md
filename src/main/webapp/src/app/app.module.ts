@@ -18,8 +18,10 @@ import { PlayareaService } from './playarea/playarea.service';
 import { AttachmentService } from './attachment.service';
 
 import { Auth } from './auth.service';
+import { AuthGuard } from './auth.guard';
 
 import { AppRoutingModule } from './app-routing.module';
+import { appRoutingProviders } from './app-routing.module';
 
 //import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import { InMemoryDataService }  from './in-memory-data.service';
@@ -50,6 +52,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ConsultationService,
     PlayareaService,
     AttachmentService,
+    appRoutingProviders,
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,

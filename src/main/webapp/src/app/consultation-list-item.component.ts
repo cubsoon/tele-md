@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { ConsultationListItemDto } from './interface/consultation-list-item-dto'
+import { SignatureDto } from './interface/signature-dto';
+import { InstantDto } from './interface/instant-dto'
 
 @Component({
 	selector: `consultation-list-item`,
@@ -90,10 +92,9 @@ import { ConsultationListItemDto } from './interface/consultation-list-item-dto'
             <img class="lockpad" src="assets/unlocked.png" alt=unlocked>
             <span class="description">Opis: {{item.description}}</span>
             <span class="creator">{{item.created.user?.username}}</span>
-            <span class="date">Data utworzenia: {{item.created.timestamp}}</span>
+            <span class="date">Data utworzenia: {{item.created.timestamp.epochSecond * 1000 | date:'medium'}}</span>
         </li>
-    </a>
-        
+    </a>   
 	`
 })
 export class ConsultationListItemComponent {

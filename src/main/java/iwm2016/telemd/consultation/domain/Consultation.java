@@ -41,6 +41,7 @@ class Consultation extends AbstractBaseEntity {
         dto.id = this.getId();
         dto.version = this.getVersion();
         dto.title = this.title;
+        dto.description = this.description;
         dto.created = creationSignature.toDto();
         return dto;
     }
@@ -50,6 +51,7 @@ class Consultation extends AbstractBaseEntity {
         dto.id = this.getId();
         dto.version = this.getVersion();
         dto.title = this.title;
+        dto.description = this.description;
         dto.created = creationSignature.toDto();
         dto.posts.addAll(getPosts().stream()
             .sorted(Comparator.comparing((Post post) -> post.getAdded().getTimestamp()))

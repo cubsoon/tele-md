@@ -72,9 +72,13 @@ import 'rxjs/add/operator/switchMap';
     <div *ngIf= "consultation">
       <div class="title">
       	<h2>{{consultation.title}}</h2>
-        <label>Dodano dnia: </label>{{consultation.created.timestamp}}
-        <label> przez: </label>{{consultation.created.user?.username}}
-		{{consultation.description}}
+		<p>
+			<label>Dodano dnia </label><b>{{ consultation.created.timestamp.epochSecond * 1000 | date:'medium' }}</b>
+			<label> przez </label><b>{{consultation.created.user?.username}}</b>
+		</p>
+		<p>
+			{{consultation.description}}
+		</p>
       </div>
 
       <ul class="posts">

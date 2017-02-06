@@ -1,19 +1,14 @@
 package iwm2016.telemd.infrastructure.security;
 
 import com.auth0.spring.security.api.Auth0SecurityConfig;
-import iwm2016.telemd.users.UserProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * Created by jakubk on 02.11.16.
@@ -40,8 +35,9 @@ public class SecurityConfiguration extends Auth0SecurityConfig {
      */
     @Override
     protected void authorizeRequests(final HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().authenticated();
+        http.httpBasic().disable();
+        http.csrf().disable();
     }
 
     @Override
@@ -56,7 +52,4 @@ public class SecurityConfiguration extends Auth0SecurityConfig {
     String getAuthorityStrategy() {
         return super.authorityStrategy;
     }
-
-
-
 }
