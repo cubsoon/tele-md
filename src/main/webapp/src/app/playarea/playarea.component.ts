@@ -3,7 +3,6 @@ import { Router }            from '@angular/router';
 import { Observable }        from 'rxjs/Observable';
 import { Subject }           from 'rxjs/Subject';
 
-import { Consultation }     from '../consultation';
 import { Action }           from './action';
 import { PlayareaService }  from './playarea.service';
 
