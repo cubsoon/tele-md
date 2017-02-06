@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 
@@ -100,11 +100,13 @@ import 'rxjs/add/operator/switchMap';
     </div>
 	`
 })
-export class ConsultationComponent implements OnInit {
+export class ConsultationComponent implements OnInit, OnDestroy {
 
   private consultation: ConsultationDto;
 
   private image: ImageDto;
+
+  private postUpdateInterval;
 
 	constructor(
 		private consultationService: ConsultationService,
@@ -118,7 +120,16 @@ export class ConsultationComponent implements OnInit {
     		.switchMap((params: Params) => this.consultationService.getConsultation(params['id']))
     		.subscribe(consultation => this.consultation = consultation);
 		this.image = new ImageDto();
+		this.postUpdateInterval = setInterval(() => {
+			this.getPosts();
+		}, 4000);
   	}
+
+	ngOnDestroy(): void {
+		if (this.postUpdateInterval) {
+			clearInterval(this.postUpdateInterval);
+		}
+	}
 
 	getPosts() {
 		this.consultationService.getPosts(this.consultation.id).then(result => this.consultation.posts = result)
