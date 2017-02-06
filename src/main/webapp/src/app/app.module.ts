@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
-import { MaterialModule } from '@angular/material'
 import { provideAuth, AuthHttp, AuthConfig }      from 'angular2-jwt';
 
 import { AppComponent } from './app.component';
@@ -16,6 +15,7 @@ import { PlayareaComponent } from './playarea/playarea.component'
 
 import { ConsultationService } from './consultation.service';
 import { PlayareaService } from './playarea/playarea.service';
+import { AttachmentService } from './attachment.service';
 
 import { Auth } from './auth.service';
 
@@ -49,6 +49,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     Auth,
     ConsultationService,
     PlayareaService,
+    AttachmentService,
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
