@@ -5,12 +5,12 @@ import com.auth0.authentication.AuthenticationAPIClient;
 import com.auth0.authentication.result.UserProfile;
 import com.auth0.request.Request;
 import com.auth0.spring.security.api.Auth0JWTToken;
+import iwm2016.telemd.users.User;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by jakm on 01.02.2017.
  */
-@Component
 public class Auth0Client {
 
     private final String clientId;
@@ -28,10 +28,14 @@ public class Auth0Client {
         this.client = this.auth0.newAuthenticationAPIClient();
     }
 
-    public String getUsername(Auth0JWTToken token) {
+    public User getUser(Auth0JWTToken token) {
         final Request<UserProfile> request = client.tokenInfo(token.getJwt());
         final UserProfile profile = request.execute();
-        return profile.getEmail();
+
+        return User.builder()
+                .id(profile.getEmail())
+                .username(profile.getNickname())
+                .build();
     }
 
 }

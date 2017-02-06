@@ -1,44 +1,37 @@
 package iwm2016.telemd.users;
 
-import iwm2016.telemd.infrastructure.entity.AbstractBaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * Created by jakubk on 02.11.16.
  */
-@Entity
-public class User extends AbstractBaseEntity implements UserDetails{
+@Builder
+@AllArgsConstructor
+public class User implements UserDetails {
 
-    @Column(nullable = false, unique = true)
+    private String id;
+
     private String username;
-
-    @Column
-    private String password;
-
-    private User() {
-        // this constructor is intentionally left blank
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     public UserDto toDto() {
         UserDto dto = new UserDto();
-        dto.id = this.getId();
-        dto.username = this.getDisplayedName();
+        dto.id = id;
+        dto.username = username;
         return dto;
     }
 
     public String getUsername() {
+        return id;
+    }
+
+    public String getDisplayedUsername() {
         return username;
     }
 
@@ -67,16 +60,9 @@ public class User extends AbstractBaseEntity implements UserDetails{
         return new ArrayList<>();
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getDisplayedName() {
-        return username;
-    }
-
     @Override
-    protected Class<?> getEntityClass() {
-        return User.class;
+    public String getPassword() {
+        return null;
     }
+
 }
