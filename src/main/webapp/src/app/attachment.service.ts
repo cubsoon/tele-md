@@ -11,19 +11,19 @@ export class AttachmentService {
 
     constructor(private http : AuthHttp) { }
 
-    postAttachment(file: File) {
+    postAttachment(file: File) : Promise<AttachmentReferenceDto> {
         let headers = new Headers();
 
         let formData = new FormData();
         formData.append('file', file, file.name);
 
         return this.http.post("/api/attachment/upload", formData)
-        .toPromise()
-        .then(response => response.json().data as AttachmentReferenceDto)
+            .toPromise()
+            .then(response => response.json() as AttachmentReferenceDto)
     }
 
     getAttachmentUrl(attachmentId: string) {
-        return `/api/attachment/${attachmentId}`;
+        return `/api/attachment/get/${attachmentId}`;
     }
 
 }

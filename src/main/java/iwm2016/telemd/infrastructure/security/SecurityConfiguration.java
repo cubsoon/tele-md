@@ -46,7 +46,7 @@ public class SecurityConfiguration extends Auth0SecurityConfig {
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
-        web.ignoring().antMatchers("/api/h2-console", "/api/h2-console/**");
+        web.ignoring().antMatchers("/api/attachment/get/*");
     }
 
     /*

@@ -1,6 +1,7 @@
 package iwm2016.telemd.attachment;
 
 import iwm2016.telemd.attachment.domain.AttachmentFacade;
+import iwm2016.telemd.attachment.dto.AttachmentReferenceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -32,11 +33,11 @@ public class AttachmentController {
     }
 
     @PostMapping(path = "attachment/upload")
-    public @ResponseBody void uploadAttachment(@RequestParam("file") MultipartFile file) throws IOException {
-        attachmentFacade.uploadImageAttachment(file.getInputStream());
+    public @ResponseBody AttachmentReferenceDto uploadAttachment(@RequestParam("file") MultipartFile file) throws IOException {
+        return attachmentFacade.uploadImageAttachment(file.getInputStream());
     }
 
-    @GetMapping(path = "attachment/{attachmentId}")
+    @GetMapping(path = "attachment/get/{attachmentId}")
     public ResponseEntity<Resource> serveAttachment(@PathVariable String attachmentId) {
         byte[] attachmentBytes = attachmentFacade.getBytes(attachmentId);
         return ResponseEntity

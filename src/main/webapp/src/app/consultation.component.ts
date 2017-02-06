@@ -4,7 +4,9 @@ import { Location }                 from '@angular/common';
 
 import { ConsultationDto } from './interface/consultation-dto';
 import { PostDto } from './interface/post-dto';
+import { ImageDto } from './interface/image-dto';
 import { ConsultationService } from './consultation.service';
+import { AttachmentService } from './attachment.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -78,7 +80,7 @@ import 'rxjs/add/operator/switchMap';
       <ul class="posts">
 	  		<li *ngFor="let post of consultation.posts">
 		  		<span class="content">{{post.content}}</span>
-		  		<span class="image">TU BEDZIE ZDJECIE</span><td>
+		  		<span *ngIf="!!post.image" class="image"><img [src]="getPostImageUrl(post)"/></span><td>
 		  		<span class="creator">{{post.added.user?.username}}</span>
 	  		</li>
 	  </ul>
@@ -86,7 +88,7 @@ import 'rxjs/add/operator/switchMap';
 	  <div class="posts">
 	  	<label>Nowy post</label><td>
 	  	<textarea #postContent rows="5" cols="60" name="content"></textarea></td>
-	  	<input type="file" name="img" accept="image/*">
+	  	<input (change)="onImageSelected($event)" type="file" name="img" accept="image/*">
 	  </div>
 
 	  <button (click)="add(postContent.value); postContent.value=''">Dodaj post</button>
@@ -98,8 +100,11 @@ export class ConsultationComponent implements OnInit {
 
   private consultation: ConsultationDto;
 
+  private image: ImageDto;
+
 	constructor(
 		private consultationService: ConsultationService,
+		private attachmentService: AttachmentService,
 		private route: ActivatedRoute,
     	private location: Location
 		) { }
@@ -108,19 +113,43 @@ export class ConsultationComponent implements OnInit {
     	this.route.params
     		.switchMap((params: Params) => this.consultationService.getConsultation(params['id']))
     		.subscribe(consultation => this.consultation = consultation);
+		this.image = new ImageDto();
   	}
 
 	getPosts() {
 		this.consultationService.getPosts(this.consultation.id).then(result => this.consultation.posts = result)
 	}
 
+	getPostImageUrl(post: PostDto) {
+		return this.attachmentService.getAttachmentUrl(post.image.attachmentId);
+	}
+
   	goBack(): void {
   		this.location.back();
 	}
 
+	onImageSelected(event) {
+		console.debug("Image selection changed.", event);
+		let files = event.target.files;
+		if (!!files && !!files[0]) {
+			this.attachmentService.postAttachment(files[0]).then(result => {
+				this.image.attachmentId = result.id;
+				this.image.title = files[0].name;
+				console.debug("Image uploaded.", this.image);
+			});
+		} else {
+			this.image = new ImageDto();
+			console.debug("Image removed.", this.image);
+		}
+	}
+
 	add(content: string): void {
-	 	var newPost = new PostDto();
-	 	newPost.content = content;
+		var newPost = new PostDto();
+		newPost.content = content;
+		newPost.image = new ImageDto();
+		newPost.image.attachmentId = this.image.attachmentId;
+		newPost.image.title = this.image.title;
+
 	  	this.consultationService.createPost(this.consultation.id, newPost).then(() => this.getPosts());
 	}
 }

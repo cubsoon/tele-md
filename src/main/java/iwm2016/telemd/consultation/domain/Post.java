@@ -1,10 +1,8 @@
 package iwm2016.telemd.consultation.domain;
 
-import iwm2016.telemd.consultation.dto.ImageDto;
 import iwm2016.telemd.consultation.dto.PostDto;
 import iwm2016.telemd.infrastructure.entity.AbstractBaseEntity;
 import iwm2016.telemd.infrastructure.entity.Signature;
-import iwm2016.telemd.infrastructure.entity.dto.SignatureDto;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -39,7 +37,7 @@ public class Post extends AbstractBaseEntity {
         dto.version = getVersion();
         dto.added = added.toDto();
         dto.content = content;
-        dto.image = dto.image != null ? image.toDto() : null;
+        dto.image = image != null ? image.toDto() : null;
         return dto;
     }
 
