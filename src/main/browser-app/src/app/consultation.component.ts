@@ -50,6 +50,7 @@ import 'rxjs/add/operator/switchMap';
 	    left: -1px;
 	    top: -4px;
 	    height: 1.8em;
+	    margin-top: .7em;
 	    margin-right: .8em;
 	    border-radius: 4px 4px 4px 4px;
 	}
@@ -57,10 +58,10 @@ import 'rxjs/add/operator/switchMap';
 		word-break: normal;
 	  	display: inline-block;
 	  	margin: .5em .5em .8em .5em;
+	  	position: absolute;
 	}
 	.posts .image {
 		display: inline-block;
-	  	float: right;
 	    padding: 0.2em 0.2em 0.2em 0.2em;
 	    background-color: #607D8B;
 	    position: relative;
@@ -83,8 +84,8 @@ import 'rxjs/add/operator/switchMap';
 
       <ul class="posts">
 	  		<li *ngFor="let post of consultation.posts">
-		  		<span class="content">{{post.content}}</span>
-		  		<span *ngIf="!!post.image" class="image"><img [src]="getPostImageUrl(post)"/></span><td>
+		  		<span *ngIf="!!post.image" class="image"><img [src]="getPostImageUrl(post)"/></span>
+		  		<span class="content">{{post.content}}</span><td>
 		  		<span class="creator">{{post.added.user?.username}}</span>
 	  		</li>
 	  </ul>

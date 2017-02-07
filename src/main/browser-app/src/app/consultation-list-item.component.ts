@@ -64,6 +64,12 @@ import { InstantDto } from './interface/instant-dto'
             display: block;
             margin: .5em .5em .8em .5em;
         }
+        a .description {
+            color: black;
+        }
+        a {
+            text-decoration: none;
+        }
         .date {
             display: inline-block;
             float: right;
