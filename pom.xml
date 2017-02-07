@@ -25,7 +25,7 @@
 		<java.version>1.8</java.version>
 
         <frontend.nodeVersion>v7.3.0</frontend.nodeVersion>
-        <frontend.workingDirectory>${basedir}/src/main/webapp</frontend.workingDirectory>
+        <frontend.workingDirectory>${basedir}/src/main/browser-app</frontend.workingDirectory>
         <frontend.outputDirectory>${frontend.workingDirectory}/dist</frontend.outputDirectory>
         <frontend.targetDirectory>${basedir}/target/classes/static</frontend.targetDirectory>
 		<frontend-maven-plugin.version>1.3</frontend-maven-plugin.version>
@@ -183,16 +183,6 @@
                                     <arguments>run ng build</arguments>
                                 </configuration>
                             </execution>
-
-							<execution>
-								<id>frontend - npm start</id>
-								<goals>
-									<goal>npm</goal>
-								</goals>
-								<configuration>
-
-								</configuration>
-							</execution>
                         </executions>
                     </plugin>
 
@@ -222,39 +212,5 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <id>serve-frontend</id>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <version>${frontend-maven-plugin.version}</version>
-
-                        <configuration>
-                            <nodeVersion>${frontend.nodeVersion}</nodeVersion>
-                            <workingDirectory>${frontend.workingDirectory}</workingDirectory>
-                        </configuration>
-
-                        <executions>
-                            <execution>
-                                <id>frontend - npm start</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>install</phase>
-                                <configuration>
-                                    <arguments>start</arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
 	</profiles>
-
-
 </project>

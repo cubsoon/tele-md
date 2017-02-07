@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
  * Created by jakubk on 02.11.16.
  */
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends Auth0SecurityConfig {
@@ -35,8 +35,8 @@ public class SecurityConfiguration extends Auth0SecurityConfig {
      */
     @Override
     protected void authorizeRequests(final HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated();
-        http.httpBasic().disable();
+        http.authorizeRequests().antMatchers("/api/**").authenticated()
+            .antMatchers("/**").permitAll();
         http.csrf().disable();
     }
 

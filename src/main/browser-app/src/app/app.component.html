@@ -1,0 +1,7 @@
+<span class="top">
+	<a class="title" routerLink="/">{{title}}</a>
+  	<a class="nav" routerLink="/consultations">Lista konsultacji</a>
+  	<a class="nav" routerLink="/new">Nowa konsultacja</a>
+  	<img id="logout" class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()" routerLink="/" src="assets/logout.png" alt="Wyloguj">
+</span>
+<router-outlet></router-outlet>

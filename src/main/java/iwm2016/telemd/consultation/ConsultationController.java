@@ -21,6 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
  * Created by jakm on 01.02.2017.
  */
 @RestController
+@RequestMapping("/api")
 public class ConsultationController {
 
     @Autowired
